@@ -1,0 +1,61 @@
+{
+    "fluentMethods": true,
+    "relationships": [
+        {
+            "relationshipName": "invitedUsers",
+            "otherEntityName": "user",
+            "relationshipType": "many-to-many",
+            "otherEntityField": "login",
+            "ownerSide": true,
+            "otherEntityRelationshipName": "invitedEvent"
+        },
+        {
+            "relationshipName": "location",
+            "otherEntityName": "location",
+            "relationshipType": "one-to-one",
+            "otherEntityField": "name",
+            "ownerSide": true,
+            "otherEntityRelationshipName": "event"
+        },
+        {
+            "relationshipName": "potentialEventDate",
+            "otherEntityName": "potentialEventDate",
+            "relationshipType": "many-to-many",
+            "otherEntityField": "startDate",
+            "ownerSide": true,
+            "otherEntityRelationshipName": "event"
+        }
+    ],
+    "fields": [
+        {
+            "fieldName": "title",
+            "fieldType": "String",
+            "fieldValidateRules": [
+                "required",
+                "minlength"
+            ],
+            "fieldValidateRulesMinlength": "1"
+        },
+        {
+            "fieldName": "description",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "selectedStartDate",
+            "fieldType": "ZonedDateTime"
+        },
+        {
+            "fieldName": "selectedEndDate",
+            "fieldType": "ZonedDateTime"
+        },
+        {
+            "fieldName": "cost",
+            "fieldType": "String"
+        }
+    ],
+    "changelogDate": "20170225070221",
+    "dto": "no",
+    "service": "serviceImpl",
+    "entityTableName": "event",
+    "pagination": "infinite-scroll"
+}

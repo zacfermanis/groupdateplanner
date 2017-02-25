@@ -1,0 +1,41 @@
+
+<div>
+    <h2><span>Potential Event Date</span> {{vm.potentialEventDate.id}}</h2>
+    <hr>
+    <jhi-alert-error></jhi-alert-error>
+    <dl class="row jh-entity-details">
+        <dt><span>Start Date</span></dt>
+        <dd>
+            <span>{{vm.potentialEventDate.startDate | date:'medium'}}</span>
+        </dd>
+        <dt><span>End Date</span></dt>
+        <dd>
+            <span>{{vm.potentialEventDate.endDate | date:'medium'}}</span>
+        </dd>
+        <dt><span>Total Accepted</span></dt>
+        <dd>
+            <span>{{vm.potentialEventDate.totalAccepted}}</span>
+        </dd>
+        <dt><span>Total Invited</span></dt>
+        <dd>
+            <span>{{vm.potentialEventDate.totalInvited}}</span>
+        </dd>
+        <dt><span>Accepted User</span></dt>
+        <dd>
+            <span ng-repeat="acceptedUser in vm.potentialEventDate.acceptedUsers">
+                {{acceptedUser.login}}{{$last ? '' : ', '}}
+            </span>
+        </dd>
+    </dl>
+
+    <button type="submit"
+            ui-sref="{{ vm.previousState }}"
+            class="btn btn-info">
+        <span class="glyphicon glyphicon-arrow-left"></span>&nbsp;<span> Back</span>
+    </button>
+
+    <button type="button" ui-sref="potential-event-date-detail.edit({id:vm.potentialEventDate.id})" class="btn btn-primary">
+        <span class="glyphicon glyphicon-pencil"></span>
+        <span class="hidden-sm-down"> Edit</span>
+    </button>
+</div>

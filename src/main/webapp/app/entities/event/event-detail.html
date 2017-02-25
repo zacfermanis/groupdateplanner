@@ -1,0 +1,55 @@
+
+<div>
+    <h2><span>Event</span> {{vm.event.id}}</h2>
+    <hr>
+    <jhi-alert-error></jhi-alert-error>
+    <dl class="row jh-entity-details">
+        <dt><span>Title</span></dt>
+        <dd>
+            <span>{{vm.event.title}}</span>
+        </dd>
+        <dt><span>Description</span></dt>
+        <dd>
+            <span>{{vm.event.description}}</span>
+        </dd>
+        <dt><span>Selected Start Date</span></dt>
+        <dd>
+            <span>{{vm.event.selectedStartDate | date:'medium'}}</span>
+        </dd>
+        <dt><span>Selected End Date</span></dt>
+        <dd>
+            <span>{{vm.event.selectedEndDate | date:'medium'}}</span>
+        </dd>
+        <dt><span>Cost</span></dt>
+        <dd>
+            <span>{{vm.event.cost}}</span>
+        </dd>
+        <dt><span>Invited Users</span></dt>
+        <dd>
+            <span ng-repeat="invitedUsers in vm.event.invitedUsers">
+                {{invitedUsers.login}}{{$last ? '' : ', '}}
+            </span>
+        </dd>
+        <dt><span>Location</span></dt>
+        <dd>
+            <a ui-sref="location-detail({id:vm.event.location.id})">{{vm.event.location.name}}</a>
+        </dd>
+        <dt><span>Potential Event Date</span></dt>
+        <dd>
+            <span ng-repeat="potentialEventDate in vm.event.potentialEventDates">
+                <a ui-sref="potential-event-date-detail({id: potentialEventDate.id})">{{potentialEventDate.startDate}}</a>{{$last ? '' : ', '}}
+            </span>
+        </dd>
+    </dl>
+
+    <button type="submit"
+            ui-sref="{{ vm.previousState }}"
+            class="btn btn-info">
+        <span class="glyphicon glyphicon-arrow-left"></span>&nbsp;<span> Back</span>
+    </button>
+
+    <button type="button" ui-sref="event-detail.edit({id:vm.event.id})" class="btn btn-primary">
+        <span class="glyphicon glyphicon-pencil"></span>
+        <span class="hidden-sm-down"> Edit</span>
+    </button>
+</div>

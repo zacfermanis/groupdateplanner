@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.4.xsd">
+    <!--
+        Added the constraints for entity PotentialEventDate.
+    -->
+    <changeSet id="20170225052351-2" author="jhipster">
+        
+        <addForeignKeyConstraint baseColumnNames="potential_event_dates_id"
+                                 baseTableName="potential_event_date_accepted_user"
+                                 constraintName="fk_potential_event_date_accepted_user_potential_event_dates_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="potential_event_date"/>
+        <addForeignKeyConstraint baseColumnNames="accepted_users_id"
+                                 baseTableName="potential_event_date_accepted_user"
+                                 constraintName="fk_potential_event_date_accepted_user_accepted_users_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="jhi_user"/>
+        
+    </changeSet>
+</databaseChangeLog>

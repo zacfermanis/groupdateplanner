@@ -1,0 +1,49 @@
+{
+    "fluentMethods": true,
+    "relationships": [
+        {
+            "relationshipName": "acceptedUser",
+            "otherEntityName": "user",
+            "relationshipType": "many-to-many",
+            "otherEntityField": "login",
+            "ownerSide": true,
+            "otherEntityRelationshipName": "potentialEventDate"
+        },
+        {
+            "relationshipName": "event",
+            "otherEntityName": "event",
+            "relationshipType": "many-to-many",
+            "ownerSide": false,
+            "otherEntityRelationshipName": "potentialEventDate"
+        }
+    ],
+    "fields": [
+        {
+            "fieldName": "startDate",
+            "fieldType": "ZonedDateTime",
+            "fieldValidateRules": [
+                "required"
+            ]
+        },
+        {
+            "fieldName": "endDate",
+            "fieldType": "ZonedDateTime",
+            "fieldValidateRules": [
+                "required"
+            ]
+        },
+        {
+            "fieldName": "totalAccepted",
+            "fieldType": "Integer"
+        },
+        {
+            "fieldName": "totalInvited",
+            "fieldType": "Integer"
+        }
+    ],
+    "changelogDate": "20170225052351",
+    "dto": "no",
+    "service": "serviceImpl",
+    "entityTableName": "potential_event_date",
+    "pagination": "infinite-scroll"
+}

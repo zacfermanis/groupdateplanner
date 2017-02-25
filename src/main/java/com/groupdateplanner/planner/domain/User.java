@@ -96,6 +96,20 @@ public class User extends AbstractAuditingEntity implements Serializable {
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
     private Set<PersistentToken> persistentTokens = new HashSet<>();
 
+    @ManyToMany
+    @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
+    @JoinTable(name = "potential_event_date_accepted_users",
+        inverseJoinColumns = @JoinColumn(name="potential_event_dates_id", referencedColumnName="id"),
+        joinColumns = @JoinColumn(name="accepted_users_id", referencedColumnName="id"))
+    private Set<PotentialEventDate> potentialEventDates = new HashSet<>();
+
+    @ManyToMany
+    @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
+    @JoinTable(name = "event_invited_users",
+        inverseJoinColumns = @JoinColumn(name="events_id", referencedColumnName="id"),
+        joinColumns = @JoinColumn(name="invited_users_id", referencedColumnName="id"))
+    private Set<Event> invitedEvents = new HashSet<>();
+
     public Long getId() {
         return id;
     }
@@ -207,6 +221,22 @@ public class User extends AbstractAuditingEntity implements Serializable {
 
     public void setPersistentTokens(Set<PersistentToken> persistentTokens) {
         this.persistentTokens = persistentTokens;
+    }
+
+    public Set<PotentialEventDate> getPotentialEventDates() {
+        return potentialEventDates;
+    }
+
+    public void setPotentialEventDates(Set<PotentialEventDate> potentialEventDates) {
+        this.potentialEventDates = potentialEventDates;
+    }
+
+    public Set<Event> getInvitedEvents() {
+        return invitedEvents;
+    }
+
+    public void setInvitedEvents(Set<Event> invitedEvents) {
+        this.invitedEvents = invitedEvents;
     }
 
     @Override

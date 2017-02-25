@@ -1,0 +1,88 @@
+
+<form name="editForm" role="form" novalidate ng-submit="vm.save()" show-validation>
+
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true"
+                ng-click="vm.clear()">&times;</button>
+        <h4 class="modal-title" id="myEventLabel">Create or edit a Event</h4>
+    </div>
+    <div class="modal-body">
+        <jhi-alert-error></jhi-alert-error>
+        <div class="form-group" ng-show="vm.event.id">
+            <label for="id">ID</label>
+            <input type="text" class="form-control" id="id" name="id"
+                    ng-model="vm.event.id" readonly />
+        </div>
+        <div class="form-group">
+            <label class="control-label" for="field_title">Title</label>
+            <input type="text" class="form-control" name="title" id="field_title"
+                    ng-model="vm.event.title"
+                    required ng-minlength="1"/>
+            <div ng-show="editForm.title.$invalid">
+                <p class="help-block"
+                    ng-show="editForm.title.$error.required">
+                    This field is required.
+                </p>
+                <p class="help-block"
+                    ng-show="editForm.title.$error.minlength" translate-value-min="1">
+                    This field is required to be at least 1 characters.
+                </p>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label" for="field_description">Description</label>
+            <input type="text" class="form-control" name="description" id="field_description"
+                    ng-model="vm.event.description"
+                    />
+        </div>
+        <div class="form-group">
+            <label class="control-label" for="field_selectedStartDate">Selected Start Date</label>
+                <div class="input-group">
+                    <input id="field_selectedStartDate" type="text" class="form-control" name="selectedStartDate" datetime-picker="{{dateformat}}" ng-model="vm.event.selectedStartDate" is-open="vm.datePickerOpenStatus.selectedStartDate"
+                    />
+                    <span class="input-group-btn">
+                        <button type="button" class="btn btn-default" ng-click="vm.openCalendar('selectedStartDate')"><i class="glyphicon glyphicon-calendar"></i></button>
+                    </span>
+                </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label" for="field_selectedEndDate">Selected End Date</label>
+                <div class="input-group">
+                    <input id="field_selectedEndDate" type="text" class="form-control" name="selectedEndDate" datetime-picker="{{dateformat}}" ng-model="vm.event.selectedEndDate" is-open="vm.datePickerOpenStatus.selectedEndDate"
+                    />
+                    <span class="input-group-btn">
+                        <button type="button" class="btn btn-default" ng-click="vm.openCalendar('selectedEndDate')"><i class="glyphicon glyphicon-calendar"></i></button>
+                    </span>
+                </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label" for="field_cost">Cost</label>
+            <input type="text" class="form-control" name="cost" id="field_cost"
+                    ng-model="vm.event.cost"
+                    />
+        </div>
+
+        <div class="form-group">
+            <label for="field_invitedUsers">Invited Users</label>
+            <select class="form-control" id="field_invitedUsers" multiple name="invitedUsers" ng-model="vm.event.invitedUsers" ng-options="user as user.login for user in vm.users track by user.id"></select>
+        </div>
+        <div class="form-group">
+            <label for="field_location">Location</label>
+            <select class="form-control" id="field_location" name="location" ng-model="vm.event.location" ng-options="location as location.name for location in vm.locations | orderBy:'id' track by location.id">
+                <option value=""></option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="field_potentialEventDate">Potential Event Date</label>
+            <select class="form-control" id="field_potentialEventDate" multiple name="potentialEventDate" ng-model="vm.event.potentialEventDates" ng-options="potentialEventDate as potentialEventDate.startDate for potentialEventDate in vm.potentialeventdates track by potentialEventDate.id"></select>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="vm.clear()">
+            <span class="glyphicon glyphicon-ban-circle"></span>&nbsp;<span>Cancel</span>
+        </button>
+        <button type="submit" ng-disabled="editForm.$invalid || vm.isSaving" class="btn btn-primary">
+            <span class="glyphicon glyphicon-save"></span>&nbsp;<span>Save</span>
+        </button>
+    </div>
+</form>

@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.4.xsd
+                        http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
+
+    <property name="now" value="now()" dbms="h2"/>
+
+    <property name="now" value="now()" dbms="mysql"/>
+    <property name="autoIncrement" value="true"/>
+
+    <property name="floatType" value="float4" dbms="postgresql, h2"/>
+    <property name="floatType" value="float" dbms="mysql, oracle, mssql"/>
+
+    <!--
+        Added the entity PotentialEventDate.
+    -->
+    <changeSet id="20170225052351-1" author="jhipster">
+        <createTable tableName="potential_event_date">
+            <column name="id" type="bigint" autoIncrement="${autoIncrement}">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="start_date" type="timestamp">
+                <constraints nullable="false" />
+            </column>
+
+            <column name="end_date" type="timestamp">
+                <constraints nullable="false" />
+            </column>
+
+            <column name="total_accepted" type="integer">
+                <constraints nullable="true" />
+            </column>
+
+            <column name="total_invited" type="integer">
+                <constraints nullable="true" />
+            </column>
+
+            <!-- jhipster-needle-liquibase-add-column - JHipster will add columns here, do not remove-->
+        </createTable>
+        <dropDefaultValue tableName="potential_event_date" columnName="start_date" columnDataType="datetime"/>
+        <dropDefaultValue tableName="potential_event_date" columnName="end_date" columnDataType="datetime"/>
+        
+        <createTable tableName="potential_event_date_accepted_user">
+            <column name="accepted_users_id" type="bigint">
+                <constraints nullable="false"/>
+            </column>
+            <column name="potential_event_dates_id" type="bigint">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+
+        <addPrimaryKey columnNames="potential_event_dates_id, accepted_users_id" tableName="potential_event_date_accepted_user"/>
+        
+    </changeSet>
+</databaseChangeLog>

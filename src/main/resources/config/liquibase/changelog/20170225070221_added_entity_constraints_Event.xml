@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.4.xsd">
+    <!--
+        Added the constraints for entity Event.
+    -->
+    <changeSet id="20170225070221-2" author="jhipster">
+        
+        <addForeignKeyConstraint baseColumnNames="events_id"
+                                 baseTableName="event_invited_users"
+                                 constraintName="fk_event_invited_users_events_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="event"/>
+        <addForeignKeyConstraint baseColumnNames="invited_users_id"
+                                 baseTableName="event_invited_users"
+                                 constraintName="fk_event_invited_users_invited_users_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="jhi_user"/>
+        
+        <addForeignKeyConstraint baseColumnNames="location_id"
+                                 baseTableName="event"
+                                 constraintName="fk_event_location_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="location"/>
+
+        <addForeignKeyConstraint baseColumnNames="events_id"
+                                 baseTableName="event_potential_event_date"
+                                 constraintName="fk_event_potential_event_date_events_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="event"/>
+        <addForeignKeyConstraint baseColumnNames="potential_event_dates_id"
+                                 baseTableName="event_potential_event_date"
+                                 constraintName="fk_event_potential_event_date_potential_event_dates_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="potential_event_date"/>
+        
+    </changeSet>
+</databaseChangeLog>

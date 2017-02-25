@@ -22,5 +22,21 @@
 
     <cache alias="com.groupdateplanner.planner.social.SocialUserConnection" uses-template="simple"/>
 
+    <cache alias="com.groupdateplanner.planner.domain.PotentialEventDate" uses-template="simple"/>
+
+    <cache alias="com.groupdateplanner.planner.domain.PotentialEventDate.invitedUsers" uses-template="simple"/>
+
+    <cache alias="com.groupdateplanner.planner.domain.PotentialEventDate.acceptedUsers" uses-template="simple"/>
+
+    <cache alias="com.groupdateplanner.planner.domain.Event" uses-template="simple"/>
+
+    <cache alias="com.groupdateplanner.planner.domain.Event.invitedUsers" uses-template="simple"/>
+
+    <cache alias="com.groupdateplanner.planner.domain.Location" uses-template="simple"/>
+
+    <cache alias="com.groupdateplanner.planner.domain.Event.potentialEventDates" uses-template="simple"/>
+
+    <cache alias="com.groupdateplanner.planner.domain.PotentialEventDate.events" uses-template="simple"/>
+
     <!-- jhipster-needle-ehcache-add-entry -->
 </config>
