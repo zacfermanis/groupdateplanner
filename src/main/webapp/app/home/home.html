@@ -1,0 +1,58 @@
+<div ng-cloak>
+    <div class="home-container">
+        <div class="row">
+            <div class="col-md-6 col-md-offset-3">
+                <div class="well well-home">
+                    <div class="picture-frame">
+                        <center>
+                            <span style="margin: auto;">Welcome to GroupDate<center>Planner</center></span>
+                        </center>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="tagline-section" >
+        <div class="tagline">
+            <div class="tagline1">
+                <center>
+                    Sick of coordinating events?
+                </center>
+            </div>
+            <hr style="width: 100px;" />
+            <div class="tagline2">
+                <center>
+                    Let GroupDate Find the Best Schedule For You!
+                </center>
+            </div>
+        </div>
+    </div>
+
+        <div ng-switch="vm.isAuthenticated()">
+            <div ng-switch-when="true" class="col-md-6 col-md-offset-3">
+                <div class="alert alert-success">
+                    Welcome {{vm.account.firstName}}. You are logged in as user "{{vm.account.login}}".
+                </div>
+            </div>
+            <div ng-switch-when="false" class="authentication-required" >
+                <center>
+                    <span class="authentication-req-title">
+                        Sign In / Register
+                    </span>
+                    <br />
+                    <br />
+                    <br />
+                    This application requires authentication.
+                    <br/>
+                    <br />
+                    Don't have an account yet? <a class="alert-link" ui-sref="register">Register a new account</a>
+                    <br />
+                    <br />
+                    Already Registered? <a class="alert-link" href="" ng-click="vm.login()">Sign In</a>
+                </center>
+            </div>
+
+        </div>
+    </div>
+</div>

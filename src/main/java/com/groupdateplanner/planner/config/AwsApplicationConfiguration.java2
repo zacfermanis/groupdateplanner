@@ -1,0 +1,144 @@
+package com.groupdateplanner.planner.config;
+
+import com.amazonaws.ClientConfiguration;
+import com.amazonaws.auth.BasicAWSCredentials;
+import com.amazonaws.http.AmazonHttpClient;
+import com.amazonaws.regions.Region;
+import com.amazonaws.regions.Regions;
+import com.amazonaws.services.cloudformation.AmazonCloudFormationClient;
+import com.amazonaws.services.ec2.AmazonEC2Client;
+import com.amazonaws.services.elasticache.AmazonElastiCache;
+import com.amazonaws.services.elasticache.AmazonElastiCacheClient;
+import com.amazonaws.services.rds.AmazonRDSClient;
+import com.amazonaws.services.s3.AmazonS3;
+import com.amazonaws.services.s3.AmazonS3Client;
+import com.amazonaws.services.simpleemail.AmazonSimpleEmailServiceClient;
+import com.amazonaws.services.sns.AmazonSNSClient;
+import com.amazonaws.services.sqs.AmazonSQS;
+import com.amazonaws.services.sqs.AmazonSQSAsync;
+import com.amazonaws.services.sqs.AmazonSQSAsyncClient;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cloud.aws.core.env.ResourceIdResolver;
+import org.springframework.cloud.aws.messaging.core.QueueMessagingTemplate;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.core.env.Environment;
+
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.util.Properties;
+
+/**
+ * @author Jordan Blair
+ * @author Zac Fermanis
+ */
+@Configuration
+public class AwsApplicationConfiguration {
+
+    private final static Logger LOGGER = LoggerFactory.getLogger(AwsApplicationConfiguration.class);
+
+    @Autowired
+    protected Environment environment;
+
+    /**************************************************************************************************
+     * Create all the other Beans (AWS SDK Clients) so that we can inject in our proxy configuration
+     * These various clients are used internally by the Spring Cloud AWS libraries
+     ***************************************************************************************************/
+
+    /**
+     * Defining this Bean allows us to inject in the ClientConfiguration (for the Proxy)
+     * and set the Default Region for the SQS Client...
+     * <p>
+     * It should just use the AWSCredentials Provider to pick up the Environment Variables
+     * you set locally... or when running on EC2, it should pick up the Instance Role permission
+     *
+     * @return
+     */
+    @Bean
+    public AmazonSQS amazonSQS() {
+        LOGGER.info("Creating AmazonSQSAsyncClient Client...");
+        AmazonSQSAsync theAmazonSQSAsync = new AmazonSQSAsyncClient(clientConfiguration());
+        theAmazonSQSAsync.setRegion(Region.getRegion(Regions.US_EAST_1));
+        return theAmazonSQSAsync;
+    }
+
+    @Bean
+    public QueueMessagingTemplate queueMessagingTemplate(AmazonSQS amazonSqs, ResourceIdResolver resourceIdResolver) {
+        return new QueueMessagingTemplate(amazonSqs, resourceIdResolver);
+    }
+
+    @Bean
+    public AmazonElastiCache amazonElastiCache() {
+        LOGGER.info("Creating AmazonElastiCache Client...");
+        return new AmazonElastiCacheClient(clientConfiguration());
+    }
+
+    @Bean
+    public AmazonSimpleEmailServiceClient amazonSimpleEmailService() {
+        LOGGER.info("Creating AmazonSimpleEmailServiceClient Client...");
+        return new AmazonSimpleEmailServiceClient(clientConfiguration());
+    }
+
+    @Bean
+    public AmazonSNSClient amazonSNS() {
+        LOGGER.info("Creating AmazonSNSClient Client...");
+        return new AmazonSNSClient(clientConfiguration());
+    }
+
+    @Bean
+    public AmazonCloudFormationClient amazonCloudFormation() {
+        LOGGER.info("Creating AmazonCloudFormationClient Client...");
+        return new AmazonCloudFormationClient(clientConfiguration());
+    }
+
+    @Bean
+    public AmazonS3 amazonS3Client() {
+        LOGGER.info("Creating AmazonS3 Client...");
+        ClientConfiguration clientConfiguration = clientConfiguration();
+        AmazonS3Client amazonS3Client;
+        if (environment.acceptsProfiles("local") || environment.acceptsProfiles("integrationTest")) {
+            String accessKey = environment.getProperty("cloud.aws.credentials.accessKey");
+            String secretKey = environment.getProperty("cloud.aws.credentials.secretKey");
+            BasicAWSCredentials basicAWSCredentials = new BasicAWSCredentials(accessKey, secretKey);
+            amazonS3Client = new AmazonS3Client(basicAWSCredentials, clientConfiguration);
+        } else {
+            amazonS3Client = new AmazonS3Client(clientConfiguration);
+        }
+        amazonS3Client.setRegion(Region.getRegion(Regions.US_EAST_1));
+        LOGGER.info("Amazon S3 Client Created");
+        return amazonS3Client;
+    }
+
+    @Bean
+    public AmazonHttpClient amazonHttpClient() {
+        LOGGER.info("Creating AmazonHttpClient...");
+        ClientConfiguration clientConfiguration = clientConfiguration();
+        LOGGER.debug("Loaded Client Config: " + clientConfiguration.getProxyHost() + ":" + clientConfiguration.getProxyPort());
+        return new AmazonHttpClient(clientConfiguration);
+    }
+
+    @Bean
+    public AmazonEC2Client amazonEC2() {
+        LOGGER.info("Creating AmazonEC2 Client...");
+        ClientConfiguration clientConfiguration = clientConfiguration();
+        return new AmazonEC2Client(clientConfiguration);
+    }
+
+    /**
+     * Creates a standard AWS ClientConfiguration object that can be passed to most AWS SDK Services..
+     * Initial configuration is to inject the proxy (local development and the AWS Squid Proxy)
+     *
+     * @return {@link ClientConfiguration}
+     */
+    @Bean
+    public ClientConfiguration clientConfiguration() {
+        LOGGER.info("Building ClientConfiguration() for AWS SDK Clients...");
+        ClientConfiguration theClientConfig = new ClientConfiguration();
+        return theClientConfig;
+    }
+    
+}
