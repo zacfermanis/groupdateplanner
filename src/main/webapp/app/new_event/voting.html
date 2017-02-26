@@ -4,10 +4,10 @@
     <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-hidden="true"
                 ng-click="vm.clear()">&times;</button>
-        <h4 class="modal-title" id="myEventLabel">Who is joining you?</h4>
-
+        <h4 class="modal-title" id="myEventLabel">Choose Your Available Dates </h4>
     </div>
     <div class="modal-body">
+        <jhi-alert-error></jhi-alert-error>
         <div class="row">
             <div class="col-lg-4">
                 <h2>Event Details:</h2>
@@ -34,8 +34,8 @@
             <div class="col-lg-8">
                 <jhi-alert-error></jhi-alert-error>
                 <div class="form-group">
-                    <label for="field_invitedUsers">Invited Users</label>
-                    <select class="form-control" id="field_invitedUsers" multiple name="invitedUsers" ng-model="vm.event.invitedUsers" ng-options="user as user.login for user in vm.users track by user.id"></select>
+                    <label for="field_potentialEventDate">My Available Dates</label>
+                    <select class="form-control" id="field_potentialEventDate" multiple name="potentialEventDate" ng-model="vm.votedDates" ng-options="potentialEventDate as ( (potentialEventDate.startDate|date:'medium') + ' - ' + (potentialEventDate.endDate|date: 'medium')) for potentialEventDate in vm.potentialeventdates track by potentialEventDate.id"></select>
                 </div>
             </div>
         </div>
@@ -45,7 +45,7 @@
             <span class="glyphicon glyphicon-ban-circle"></span>&nbsp;<span>Cancel</span>
         </button>
         <button type="submit" ng-disabled="editForm.$invalid || vm.isSaving" class="btn btn-primary">
-            <span class="glyphicon glyphicon-save"></span>&nbsp;<span>Next</span>
+            <span class="glyphicon glyphicon-save"></span>&nbsp;<span>Submit</span>
         </button>
     </div>
 </form>

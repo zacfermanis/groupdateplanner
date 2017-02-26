@@ -1,0 +1,45 @@
+<div>
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true"
+                ng-click="vm.clear()">&times;</button>
+        <h1 class="modal-title" id="myEventLabel">Thank You!</h1>
+
+    </div>
+    <div class="modal-body">
+        <div class="row">
+            <div class="col-lg-4">
+                <h2>Event Details:</h2>
+                <div>
+                    <label for="title">Title</label>
+                    <span id="title">{{vm.event.title}}</span>
+                </div>
+                <div>
+                    <label for="desc">Description</label>
+                    <span id="desc">{{vm.event.description}}</span>
+                </div>
+                <div>
+                    <label for="cost">Est. Cost</label>
+                    <span id="cost">{{vm.event.cost}}</span>
+                </div>
+                <h2>Location Details:</h2>
+                <div>
+                    <label for="name">Name</label>
+                    <span id="name">{{vm.location.name}}</span>
+                    <span>{{vm.location.streetAddress1}}</span>
+                    <span ng-show="vm.location.streetAddress2">{{vm.location.streetAddress2}}</span>
+                    <span>{{vm.location.city}}, {{vm.location.state}} {{vm.location.zipcode}}</span>
+                </div>
+            </div>
+            <div class="col-lg-8">
+                <p>You have successfully submitted your availabilities!</p>
+                <p>We are collecting every attendee's selections and will provide the best date for you.</p>
+                <p>View <a ui-sref="scoring({id:vm.event.id})">Current Status</a></p>
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-primary" data-dismiss="modal" ng-click="vm.clear()">
+            <span class="fa fa-close"></span>&nbsp;<span>Close</span>
+        </button>
+    </div>
+</div>

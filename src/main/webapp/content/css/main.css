@@ -164,6 +164,10 @@ Main page styles
     color: #008952;
 }
 
+.location_details {
+    padding-left: 17px;
+}
+
 /* wait autoprefixer update to allow simple generation of high pixel density media query */
 /*@media*/
 /*only screen and (-webkit-min-device-pixel-ratio: 2),*/
@@ -444,12 +448,12 @@ Footer
     text-align: left;
     font: bold 16px sans-serif;
     padding: 50px 50px;
-    margin-top: 238px;
 }
 
 .footer-logo-img {
     max-width: 40%;
     margin-top: -100px;
+    margin-left: 50px;
 }
 
 .footer-distributed .footer-left,

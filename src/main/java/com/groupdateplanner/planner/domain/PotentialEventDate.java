@@ -123,13 +123,16 @@ public class PotentialEventDate implements Serializable {
 
     public PotentialEventDate addAcceptedUser(User user) {
         this.acceptedUsers.add(user);
-        user.getPotentialEventDates().add(this);
+        if(this.totalAccepted != null) {
+            this.totalAccepted++;
+        } else  {
+            this.totalAccepted=1;
+        }
         return this;
     }
 
     public PotentialEventDate removeAcceptedUser(User user) {
         this.acceptedUsers.remove(user);
-        user.getPotentialEventDates().remove(this);
         return this;
     }
 

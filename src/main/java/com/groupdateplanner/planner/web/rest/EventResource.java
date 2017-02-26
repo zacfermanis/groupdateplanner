@@ -2,7 +2,9 @@ package com.groupdateplanner.planner.web.rest;
 
 import com.codahale.metrics.annotation.Timed;
 import com.groupdateplanner.planner.domain.Event;
+import com.groupdateplanner.planner.domain.User;
 import com.groupdateplanner.planner.service.EventService;
+import com.groupdateplanner.planner.service.MailService;
 import com.groupdateplanner.planner.web.rest.util.HeaderUtil;
 import com.groupdateplanner.planner.web.rest.util.PaginationUtil;
 import io.swagger.annotations.ApiParam;
@@ -32,11 +34,14 @@ public class EventResource {
     private final Logger log = LoggerFactory.getLogger(EventResource.class);
 
     private static final String ENTITY_NAME = "event";
-        
+
     private final EventService eventService;
 
-    public EventResource(EventService eventService) {
+    private final MailService mailService;
+
+    public EventResource(EventService eventService, MailService mailService) {
         this.eventService = eventService;
+        this.mailService = mailService;
     }
 
     /**
@@ -57,6 +62,22 @@ public class EventResource {
         return ResponseEntity.created(new URI("/api/events/" + result.getId()))
             .headers(HeaderUtil.createEntityCreationAlert(ENTITY_NAME, result.getId().toString()))
             .body(result);
+    }
+
+    @PostMapping("/events/submit")
+    @Timed
+    public ResponseEntity<Event> submitEvent(@Valid @RequestBody Event event) throws URISyntaxException {
+        log.info("**********EVENT SUBMITTED!!");
+
+        // Send emails to invitees
+
+        for (User user : event.getInvitedUsers()) {
+            mailService.sendVotingEmail(user, event);
+        }
+
+        return ResponseEntity.ok()
+            .headers(HeaderUtil.createEntityUpdateAlert(ENTITY_NAME, event.getId().toString()))
+            .body(event);
     }
 
     /**

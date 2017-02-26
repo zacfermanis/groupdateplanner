@@ -1,8 +1,12 @@
 package com.groupdateplanner.planner.web.rest;
 
 import com.codahale.metrics.annotation.Timed;
+import com.groupdateplanner.planner.domain.Event;
 import com.groupdateplanner.planner.domain.PotentialEventDate;
+import com.groupdateplanner.planner.domain.User;
+import com.groupdateplanner.planner.service.MailService;
 import com.groupdateplanner.planner.service.PotentialEventDateService;
+import com.groupdateplanner.planner.service.UserService;
 import com.groupdateplanner.planner.web.rest.util.HeaderUtil;
 import com.groupdateplanner.planner.web.rest.util.PaginationUtil;
 import io.swagger.annotations.ApiParam;
@@ -21,6 +25,7 @@ import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 /**
  * REST controller for managing PotentialEventDate.
@@ -32,11 +37,17 @@ public class PotentialEventDateResource {
     private final Logger log = LoggerFactory.getLogger(PotentialEventDateResource.class);
 
     private static final String ENTITY_NAME = "potentialEventDate";
-        
+
     private final PotentialEventDateService potentialEventDateService;
 
-    public PotentialEventDateResource(PotentialEventDateService potentialEventDateService) {
+    private final UserService userService;
+
+    private final MailService mailService;
+
+    public PotentialEventDateResource(PotentialEventDateService potentialEventDateService, UserService userService, MailService mailService) {
         this.potentialEventDateService = potentialEventDateService;
+        this.userService = userService;
+        this.mailService = mailService;
     }
 
     /**
@@ -110,6 +121,27 @@ public class PotentialEventDateResource {
         log.debug("REST request to get PotentialEventDate : {}", id);
         PotentialEventDate potentialEventDate = potentialEventDateService.findOne(id);
         return ResponseUtil.wrapOrNotFound(Optional.ofNullable(potentialEventDate));
+    }
+
+    @PostMapping("/potential-event-dates/{id}/user/{userId}")
+    @Timed
+    public ResponseEntity<PotentialEventDate> vote(@PathVariable Long id, @PathVariable Long userId) {
+        log.debug("REST request to vote for PotentialEventDate : {}, by User: {}", id, userId);
+        PotentialEventDate potentialEventDate = potentialEventDateService.findOne(id);
+        User user = userService.getUserWithAuthorities(userId);
+        potentialEventDate.addAcceptedUser(user);
+        PotentialEventDate result = potentialEventDateService.save(potentialEventDate);
+        // TODO - Email Owner
+//        Set<Event> events = potentialEventDate.getEvents();
+//        User owner;
+//        if (events.iterator().hasNext()) {
+//            owner = userService.getUserWithAuthorities(events.iterator().next().get
+//        }
+        //Send mail to the owner
+        //mailService.sendVotedEmail();
+        return ResponseEntity.ok()
+            .headers(HeaderUtil.createEntityUpdateAlert(ENTITY_NAME, potentialEventDate.getId().toString()))
+            .body(result);
     }
 
     /**

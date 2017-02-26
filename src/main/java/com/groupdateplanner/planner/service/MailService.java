@@ -4,6 +4,7 @@ import com.amazonaws.regions.Region;
 import com.amazonaws.regions.Regions;
 import com.amazonaws.services.simpleemail.AmazonSimpleEmailServiceClient;
 import com.amazonaws.services.simpleemail.model.*;
+import com.groupdateplanner.planner.domain.Event;
 import com.groupdateplanner.planner.domain.User;
 
 import io.github.jhipster.config.JHipsterProperties;
@@ -36,6 +37,8 @@ public class MailService {
     private final Logger log = LoggerFactory.getLogger(MailService.class);
 
     private static final String USER = "user";
+
+    private static final String EVENT = "event";
 
     private static final String BASE_URL = "baseUrl";
 
@@ -119,6 +122,32 @@ public class MailService {
         context.setVariable(BASE_URL, jHipsterProperties.getMail().getBaseUrl());
         String content = templateEngine.process("activationEmail", context);
         String subject = messageSource.getMessage("email.activation.title", null, locale);
+        sendEmail(user.getEmail(), subject, content, false, true);
+    }
+
+    @Async
+    public void sendVotingEmail(User user, Event event) {
+        log.debug("Sending voting e-mail to '{}'", user.getEmail());
+        Locale locale = Locale.forLanguageTag(user.getLangKey());
+        Context context = new Context(locale);
+        context.setVariable(USER, user);
+        context.setVariable(EVENT, event);
+        context.setVariable(BASE_URL, jHipsterProperties.getMail().getBaseUrl());
+        String content = templateEngine.process("votingEmail", context);
+        String subject = messageSource.getMessage("email.voting.title", null, locale);
+        sendEmail(user.getEmail(), subject, content, false, true);
+    }
+
+    @Async
+    public void sendVotedEmail(User user, Event event) {
+        log.debug("Sending voting e-mail to '{}'", user.getEmail());
+        Locale locale = Locale.forLanguageTag(user.getLangKey());
+        Context context = new Context(locale);
+        context.setVariable(USER, user);
+        context.setVariable(EVENT, event);
+        context.setVariable(BASE_URL, jHipsterProperties.getMail().getBaseUrl());
+        String content = templateEngine.process("votedEmail", context);
+        String subject = messageSource.getMessage("email.voted.title", null, locale);
         sendEmail(user.getEmail(), subject, content, false, true);
     }
 

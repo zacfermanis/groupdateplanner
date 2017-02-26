@@ -4,10 +4,10 @@
     <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-hidden="true"
                 ng-click="vm.clear()">&times;</button>
-        <h4 class="modal-title" id="myEventLabel">Who is joining you?</h4>
-
+        <h1 class="modal-title" id="myEventLabel">Current Event Availability Status </h1>
     </div>
     <div class="modal-body">
+        <jhi-alert-error></jhi-alert-error>
         <div class="row">
             <div class="col-lg-4">
                 <h2>Event Details:</h2>
@@ -33,19 +33,20 @@
             </div>
             <div class="col-lg-8">
                 <jhi-alert-error></jhi-alert-error>
-                <div class="form-group">
-                    <label for="field_invitedUsers">Invited Users</label>
-                    <select class="form-control" id="field_invitedUsers" multiple name="invitedUsers" ng-model="vm.event.invitedUsers" ng-options="user as user.login for user in vm.users track by user.id"></select>
-                </div>
+                <span class="row" ng-repeat="potentialEventDate in vm.event.potentialEventDates">
+                    <div class="col-md-8">
+                        {{potentialEventDate.startDate | date:"medium"}} - {{potentialEventDate.endDate | date:"medium"}}
+                    </div>
+                    <div class="col-md-4" style="font-weight: bolder;">
+                        {{potentialEventDate.totalAccepted}}
+                    </div>
+                </span>
             </div>
         </div>
     </div>
     <div class="modal-footer">
-        <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="vm.clear()">
-            <span class="glyphicon glyphicon-ban-circle"></span>&nbsp;<span>Cancel</span>
-        </button>
-        <button type="submit" ng-disabled="editForm.$invalid || vm.isSaving" class="btn btn-primary">
-            <span class="glyphicon glyphicon-save"></span>&nbsp;<span>Next</span>
+        <button type="button" class="btn btn-primary" data-dismiss="modal" ng-click="vm.clear()">
+            <span class="glyphicon glyphicon-ban-circle"></span>&nbsp;<span>Close</span>
         </button>
     </div>
 </form>

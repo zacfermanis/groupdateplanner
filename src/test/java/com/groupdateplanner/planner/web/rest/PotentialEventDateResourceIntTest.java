@@ -4,7 +4,9 @@ import com.groupdateplanner.planner.GroupdateplannerApp;
 
 import com.groupdateplanner.planner.domain.PotentialEventDate;
 import com.groupdateplanner.planner.repository.PotentialEventDateRepository;
+import com.groupdateplanner.planner.service.MailService;
 import com.groupdateplanner.planner.service.PotentialEventDateService;
+import com.groupdateplanner.planner.service.UserService;
 import com.groupdateplanner.planner.web.rest.errors.ExceptionTranslator;
 
 import org.junit.Before;
@@ -62,6 +64,12 @@ public class PotentialEventDateResourceIntTest {
     private PotentialEventDateService potentialEventDateService;
 
     @Autowired
+    private UserService userService;
+
+    @Autowired
+    private MailService mailService;
+
+    @Autowired
     private MappingJackson2HttpMessageConverter jacksonMessageConverter;
 
     @Autowired
@@ -80,7 +88,7 @@ public class PotentialEventDateResourceIntTest {
     @Before
     public void setup() {
         MockitoAnnotations.initMocks(this);
-        PotentialEventDateResource potentialEventDateResource = new PotentialEventDateResource(potentialEventDateService);
+        PotentialEventDateResource potentialEventDateResource = new PotentialEventDateResource(potentialEventDateService, userService, mailService);
         this.restPotentialEventDateMockMvc = MockMvcBuilders.standaloneSetup(potentialEventDateResource)
             .setCustomArgumentResolvers(pageableArgumentResolver)
             .setControllerAdvice(exceptionTranslator)
