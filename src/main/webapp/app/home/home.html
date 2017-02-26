@@ -13,7 +13,42 @@
             </div>
         </div>
     </div>
-    <div class="tagline-section" >
+    <div ng-switch="vm.isAuthenticated()">
+        <div ng-switch-when="true" class="col-md-6 col-md-offset-3">
+            <div class="alert alert-success">
+                <center>
+                    Welcome {{vm.account.firstName}}. You are logged in as user "{{vm.account.login}}".
+                </center>
+                <center>
+                    <button class="btn btn-primary" ui-sref="new_event-flow1" >
+                        <span class="glyphicon glyphicon-plus"></span>
+                        <span >
+                            Create new Event
+                        </span>
+                    </button>
+                </center>
+            </div>
+        </div>
+        <div ng-switch-when="false" class="authentication-required" >
+            <center>
+                    <span class="authentication-req-title">
+                        Sign In / Register
+                    </span>
+                <br />
+                <br />
+                <br />
+                This application requires authentication.
+                <br/>
+                <br />
+                Don't have an account yet? <a class="alert-link" ui-sref="register">Register a new account</a>
+                <br />
+                <br />
+                Already Registered? <a class="alert-link" href="" ng-click="vm.login()">Sign In</a>
+            </center>
+        </div>
+
+    </div>
+    <div class="tagline-section">
         <div class="tagline">
             <div class="tagline1">
                 <center>
@@ -26,33 +61,6 @@
                     Let GroupDate Find the Best Schedule For You!
                 </center>
             </div>
-        </div>
-    </div>
-
-        <div ng-switch="vm.isAuthenticated()">
-            <div ng-switch-when="true" class="col-md-6 col-md-offset-3">
-                <div class="alert alert-success">
-                    Welcome {{vm.account.firstName}}. You are logged in as user "{{vm.account.login}}".
-                </div>
-            </div>
-            <div ng-switch-when="false" class="authentication-required" >
-                <center>
-                    <span class="authentication-req-title">
-                        Sign In / Register
-                    </span>
-                    <br />
-                    <br />
-                    <br />
-                    This application requires authentication.
-                    <br/>
-                    <br />
-                    Don't have an account yet? <a class="alert-link" ui-sref="register">Register a new account</a>
-                    <br />
-                    <br />
-                    Already Registered? <a class="alert-link" href="" ng-click="vm.login()">Sign In</a>
-                </center>
-            </div>
-
         </div>
     </div>
 </div>

@@ -1,0 +1,166 @@
+
+<form name="editForm" role="form" novalidate ng-submit="vm.save()" show-validation>
+
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true"
+                ng-click="vm.clear()">&times;</button>
+        <h4 class="modal-title" id="myEventLabel">Where will this event be held?</h4>
+
+    </div>
+    <div class="modal-body">
+        <div class="row">
+            <div class="col-lg-4">
+                Event Details:
+                <div>
+                    <label for="title">Title</label>
+                    <span id="title">{{vm.event.title}}</span>
+                </div>
+                <div>
+                    <label for="desc">Description</label>
+                    <span id="desc">{{vm.event.description}}</span>
+                </div>
+                <div>
+                    <label for="cost">Est. Cost</label>
+                    <span id="cost">{{vm.event.cost}}</span>
+                </div>
+            </div>
+            <div class="col-lg-8">
+                <jhi-alert-error></jhi-alert-error>
+                <div class="form-group">
+                    <label class="control-label" for="field_name">Location Name</label>
+                    <input type="text" class="form-control" name="name" id="field_name"
+                           ng-model="vm.location.name"
+                           required ng-minlength="1"/>
+                    <div ng-show="editForm.name.$invalid">
+                        <p class="help-block"
+                           ng-show="editForm.name.$error.required">
+                            This field is required.
+                        </p>
+                        <p class="help-block"
+                           ng-show="editForm.name.$error.minlength" translate-value-min="1">
+                            This field is required to be at least 1 characters.
+                        </p>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label" for="field_streetAddress1">Street Address 1</label>
+                    <input type="text" class="form-control" name="streetAddress1" id="field_streetAddress1"
+                           ng-model="vm.location.streetAddress1"
+                           required ng-minlength="1"/>
+                    <div ng-show="editForm.streetAddress1.$invalid">
+                        <p class="help-block"
+                           ng-show="editForm.streetAddress1.$error.required">
+                            This field is required.
+                        </p>
+                        <p class="help-block"
+                           ng-show="editForm.streetAddress1.$error.minlength" translate-value-min="1">
+                            This field is required to be at least 1 characters.
+                        </p>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label" for="field_streetAddress2">Street Address 2</label>
+                    <input type="text" class="form-control" name="streetAddress2" id="field_streetAddress2"
+                           ng-model="vm.location.streetAddress2"
+                    />
+                </div>
+                <div class="form-group">
+                    <label class="control-label" for="field_city">City</label>
+                    <input type="text" class="form-control" name="city" id="field_city"
+                           ng-model="vm.location.city"
+                           required ng-minlength="1"/>
+                    <div ng-show="editForm.city.$invalid">
+                        <p class="help-block"
+                           ng-show="editForm.city.$error.required">
+                            This field is required.
+                        </p>
+                        <p class="help-block"
+                           ng-show="editForm.city.$error.minlength" translate-value-min="1">
+                            This field is required to be at least 1 characters.
+                        </p>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label" for="field_state">State</label>
+                    <select class="form-control" name="state" ng-model="vm.location.state" id="field_state">
+                        <option value="AK">AK</option>
+                        <option value="AL">AL</option>
+                        <option value="AR">AR</option>
+                        <option value="AZ">AZ</option>
+                        <option value="CA">CA</option>
+                        <option value="CO">CO</option>
+                        <option value="CT">CT</option>
+                        <option value="DC">DC</option>
+                        <option value="DE">DE</option>
+                        <option value="FL">FL</option>
+                        <option value="GA">GA</option>
+                        <option value="HI">HI</option>
+                        <option value="IA">IA</option>
+                        <option value="ID">ID</option>
+                        <option value="IL">IL</option>
+                        <option value="IN">IN</option>
+                        <option value="KS">KS</option>
+                        <option value="KY">KY</option>
+                        <option value="LA">LA</option>
+                        <option value="MA">MA</option>
+                        <option value="MD">MD</option>
+                        <option value="ME">ME</option>
+                        <option value="MI">MI</option>
+                        <option value="MN">MN</option>
+                        <option value="MO">MO</option>
+                        <option value="MS">MS</option>
+                        <option value="MT">MT</option>
+                        <option value="NC">NC</option>
+                        <option value="ND">ND</option>
+                        <option value="NE">NE</option>
+                        <option value="NH">NH</option>
+                        <option value="NJ">NJ</option>
+                        <option value="NM">NM</option>
+                        <option value="NV">NV</option>
+                        <option value="NY">NY</option>
+                        <option value="OH">OH</option>
+                        <option value="OK">OK</option>
+                        <option value="OR">OR</option>
+                        <option value="PA">PA</option>
+                        <option value="RI">RI</option>
+                        <option value="SC">SC</option>
+                        <option value="SD">SD</option>
+                        <option value="TN">TN</option>
+                        <option value="TX">TX</option>
+                        <option value="UT">UT</option>
+                        <option value="VA">VA</option>
+                        <option value="VT">VT</option>
+                        <option value="WA">WA</option>
+                        <option value="WI">WI</option>
+                        <option value="WV">WV</option>
+                        <option value="WY">WY</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label class="control-label" for="field_zipcode">Zipcode</label>
+                    <input type="text" class="form-control" name="zipcode" id="field_zipcode"
+                           ng-model="vm.location.zipcode"
+                           required ng-minlength="5"/>
+                    <div ng-show="editForm.zipcode.$invalid">
+                        <p class="help-block"
+                           ng-show="editForm.zipcode.$error.required">
+                            This field is required.
+                        </p>
+                        <p class="help-block"
+                           ng-show="editForm.zipcode.$error.minlength" translate-value-min="5">
+                            This field is required to be at least 5 characters.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="vm.clear()">
+            <span class="glyphicon glyphicon-ban-circle"></span>&nbsp;<span>Cancel</span>
+        </button>
+        <button type="submit" ng-disabled="editForm.$invalid || vm.isSaving" class="btn btn-primary">
+            <span class="glyphicon glyphicon-save"></span>&nbsp;<span>Save</span>
+        </button>
+    </div>
+</form>
