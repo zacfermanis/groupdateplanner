@@ -373,6 +373,7 @@
         <dependency>
             <groupId>org.springframework.cloud</groupId>
             <artifactId>spring-cloud-starter-aws</artifactId>
+            <version>1.0.3.RELEASE</version>
         </dependency>
         <!-- security -->
         <dependency>

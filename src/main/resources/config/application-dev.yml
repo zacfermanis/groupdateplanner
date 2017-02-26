@@ -26,8 +26,8 @@ spring:
         serialization.indent_output: true
     datasource:
         type: com.zaxxer.hikari.HikariDataSource
-        url: jdbc:mysql://localhost:3306/groupdateplanner?useUnicode=true&characterEncoding=utf8&useSSL=false
-        username: root
+        url:
+        username:
         password:
         hikari:
             data-source-properties:
@@ -50,11 +50,6 @@ spring:
     cache:
         jcache:
             config: config/ehcache/ehcache-dev.xml
-    mail:
-        host: email-smtp.us-east-1.amazonaws.com
-        port: 25
-        username: AKIAIQAT7JTDWRAHDDUA
-        password: Avij0+J7cUAUGR2CgWyKaGXhuG1tdrhm8ZjbzK2AugyQ
     messages:
         cache-seconds: 1
     thymeleaf:
@@ -95,7 +90,7 @@ jhipster:
     security:
         remember-me:
             # security key (this key should be unique for your application, and kept secret)
-            key: a5a36b8d85b9789738e3139758e53d5bb5395f4f
+            key:
     mail: # specific JHipster mail property, for standard properties see MailProperties
         from: groupdateplanner@localhost
         base-url: http://127.0.0.1:8080

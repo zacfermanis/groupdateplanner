@@ -36,9 +36,11 @@
                 <jhi-alert-error></jhi-alert-error>
                 <div class="potential-event-dates-list">
                     <h3>Potential Event Dates</h3>
-                    <span class="row" id=potentialEventDates" ng-repeat="potentialEventDate in vm.event.potentialEventDates">
-                        {{potentialEventDate.startDate | date:"medium"}} - {{potentialEventDate.endDate | date:"medium"}}{{$last ? '' : ', '}}
-                    </span>
+                    <div ng-repeat="potentialEventDate in vm.event.potentialEventDates" >
+                        <span >
+                            {{potentialEventDate.startDate | date:"medium"}} to {{potentialEventDate.endDate | date:"medium"}}
+                        </span>
+                    </div>
                 </div>
                 <div class="form-group">
                     <label class="control-label" for="field_startDate">Start Date</label>

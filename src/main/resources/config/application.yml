@@ -67,8 +67,8 @@ spring:
 cloud:
     aws:
         credentials:
-            accessKey: AKIAIPJ23PTRICWLTZLQ
-            secretKey: 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
+            accessKey: MASKED
+            secretKey: MASKED
 
 security:
     basic:

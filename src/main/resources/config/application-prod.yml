@@ -21,8 +21,8 @@ spring:
             enabled: false
     datasource:
         type: com.zaxxer.hikari.HikariDataSource
-        url: jdbc:mysql://localhost:3306/groupdateplanner?useUnicode=true&characterEncoding=utf8&useSSL=false
-        username: root
+        url:
+        username:
         password:
         hikari:
             data-source-properties:
@@ -46,10 +46,10 @@ spring:
         jcache:
             config: config/ehcache/ehcache-prod.xml
     mail:
-        host: localhost
+        host: email-smtp.us-east-1.amazonaws.com
         port: 25
-        username:
-        password:
+        username: MASKED
+        password: MASKED
     thymeleaf:
         cache: true
 
@@ -94,10 +94,10 @@ jhipster:
     security:
         remember-me:
             # security key (this key should be unique for your application, and kept secret)
-            key: a5a36b8d85b9789738e3139758e53d5bb5395f4f
+            key:
     mail: # specific JHipster mail property, for standard properties see MailProperties
-        from: groupdateplanner@localhost
-        base-url: http://my-server-url-to-change # Modify according to your server's URL
+        from: support@groupdateplanner.com
+        base-url: https://groupdateplanner.cfapps.io # Modify according to your server's URL
     metrics: # DropWizard Metrics configuration, used by MetricsConfiguration
         jmx.enabled: true
         graphite:
